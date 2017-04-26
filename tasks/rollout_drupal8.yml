@@ -1,0 +1,29 @@
+- block:
+  - name: Run config import - {{ instance.name }}
+    command: '{{ drush_path }} @{{ instance.name }} --yes cim'
+    args:
+      chdir: "{{ instance.dir }}{{ instance.vhost_dir | default('/htdocs') }}"
+    register: cim_result
+    changed_when: cim_result.rc != 0
+
+  - name: Output of config import - {{ instance.name }}
+    debug: var=cim_result.stdout_lines
+    when: cim_result.stdout_lines | length
+
+  when: >
+    ( instance.with_cim is defined and instance.with_cim )
+    or drupal_rollout_with_cim
+
+- block:
+  - name: Run cache-rebuild - {{ instance.name }}
+    command: '{{ drush_path }} @{{ instance.name }} cache-rebuild'
+    register: cache_result
+
+  - name: Output of cache-rebuild - {{ instance.name }}
+    debug: var=cache_result.stdout_lines
+    when: cache_result.stdout_lines | length
+
+  when: >
+    rollout_with_cache_clear
+    and (mysql_replication_role is undefined or mysql_replication_role == 'master')
+    and sync_master is undefined

@@ -1,0 +1,9 @@
+- name: Run drupal scheduler - light-weight cron (drush)
+  become: '{{ "no" if drupal_user is undefined else "yes" }}'
+  become_user: '{{ drupal_user | default(omit) }}'
+  command: '{{ drush_path }} @{{ item.name }} scheduler-cron'
+  with_items: '{{ drupal_instances }}'
+  when: >
+    (instance.name == drupal_task_instance or drupal_task_instance == '')
+    and (mysql_replication_role is undefined or mysql_replication_role == 'master')
+    and sync_master is undefined

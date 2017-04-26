@@ -1,0 +1,13 @@
+- block:
+  - name: Run cache-clear - {{ instance.name }}
+    command: '{{ drush_path }} @{{ instance.name }} cache-clear all'
+    register: cache_result
+
+  - name: Output of cache-clear - {{ instance.name }}
+    debug: var=cache_result.stdout_lines
+    when: cache_result.stdout_lines | length
+
+  when: >
+    rollout_with_cache_clear
+    and (mysql_replication_role is undefined or mysql_replication_role == 'master')
+    and sync_master is undefined

@@ -1,0 +1,7 @@
+- fail:
+    msg: 'drupal_task_name variable has to be set with --extra-vars "drupal_task_name=rollout"'
+  when: drupal_task_name == ''
+
+- include: instance.yml
+  when: redmine_instances is defined and redmine_instances is iterable
+  tags: drupal
