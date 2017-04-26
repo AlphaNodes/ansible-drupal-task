@@ -6,8 +6,6 @@ drupal_task_name: ''
 # overwrite it!
 drupal_task_instance: ''
 
-drupal_task_dir: '/srv/{{ drupal_task_instance }}'
-
 # default settings of rollout task
 # (you can overwrite it in drupal_insances list)
 drupal_rollout_with_updatedb: yes

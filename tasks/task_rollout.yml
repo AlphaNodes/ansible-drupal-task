@@ -1,7 +1,7 @@
 - include: rollout.yml
   tags: rollout
   with_items: '{{ drupal_instances }}'
-  when: >
-    instance.name == drupal_task_instance or drupal_task_instance == ''
   loop_control:
     loop_var: instance
+  when: >
+    instance.name == drupal_task_instance or drupal_task_instance == ''
