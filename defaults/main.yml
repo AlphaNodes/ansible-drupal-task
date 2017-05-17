@@ -9,6 +9,7 @@ drupal_task_instance: ''
 # default settings of rollout task
 # (you can overwrite it in drupal_insances list)
 drupal_rollout_with_updatedb: yes
+drupal_rollout_with_entity_updates: no
 drupal_rollout_with_cron: yes
 drupal_rollout_with_cache_clear: yes
 drupal_rollout_with_cim: no

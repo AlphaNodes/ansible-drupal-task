@@ -1,4 +1,5 @@
 - set_fact: rollout_with_updatedb="{{ instance.rollout_with_updatedb | default(drupal_rollout_with_updatedb) }}"
+- set_fact: rollout_with_entity_updates="{{ instance.rollout_with_entity_updates | default(drupal_rollout_with_entity_updates) }}"
 - set_fact: rollout_with_cron="{{ instance.rollout_with_cron | default(drupal_rollout_with_cron) }}"
 - set_fact: rollout_with_cache_clear="{{ instance.rollout_with_cache_clear | default(drupal_rollout_with_cache_clear) }}"
 - set_fact: rollout_with_cim="{{ instance.rollout_with_cim | default(drupal_rollout_with_cim) }}"
@@ -40,6 +41,21 @@
 
   when: >
     rollout_with_updatedb
+    and (mysql_replication_role is undefined or mysql_replication_role == 'master')
+    and sync_master is undefined
+
+- block:
+  - name: Run entity-updates - {{ instance.name }}
+    command: '{{ drush_path }} @{{ instance.name }} --yes entity-updates'
+    register: entity_result
+    changed_when: entity_result.rc != 0
+
+  - name: Output of entity-updates - {{ instance.name }}
+    debug: var=entity_result.stdout_lines
+    when: entity_result.stdout_lines | length
+
+  when: >
+    rollout_with_entity_updates
     and (mysql_replication_role is undefined or mysql_replication_role == 'master')
     and sync_master is undefined
 
