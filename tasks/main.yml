@@ -2,7 +2,7 @@
     msg: 'drupal_task_name variable has to be set with --extra-vars "drupal_task_name=rollout"'
   when: drupal_task_name == ''
 
-- include: instance.yml
+- include_tasks: instance.yml
   with_items: '{{ drupal_instances | default([])}}'
   loop_control:
     loop_var: instance

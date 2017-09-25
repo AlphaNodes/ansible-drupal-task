@@ -61,11 +61,11 @@
     and sync_master is undefined
     and git_result.changed
 
-- include: rollout_drupal7.yml
+- include_tasks: rollout_drupal7.yml
   tags: drupal7
   when: instance.major_version is undefined or instance.major_version == 7
 
-- include: rollout_drupal8.yml
+- include_tasks: rollout_drupal8.yml
   tags: drupal8
   when: instance.major_version is defined and instance.major_version == 8
 
