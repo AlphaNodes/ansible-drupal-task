@@ -13,4 +13,6 @@ galaxy_info:
       versions:
       - jessie
   galaxy_tags:
-    - drupal,deploy,cron
+    - drupal
+    - deploy
+    - cron
