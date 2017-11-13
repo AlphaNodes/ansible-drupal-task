@@ -43,7 +43,6 @@
     rollout_with_updatedb
     and (mysql_replication_role is undefined or mysql_replication_role == 'master')
     and sync_master is undefined
-    and git_result.changed
 
 - block:
   - name: Run entity-updates - {{ instance.name }}
@@ -59,7 +58,6 @@
     rollout_with_entity_updates
     and (mysql_replication_role is undefined or mysql_replication_role == 'master')
     and sync_master is undefined
-    and git_result.changed
 
 - include_tasks: rollout_drupal7.yml
   tags: drupal7
