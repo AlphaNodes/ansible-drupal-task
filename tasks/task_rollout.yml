@@ -25,8 +25,8 @@
     when: composer_result.stdout_lines | length
 
   when: >
-    instance.with_composer_update is defined
-    and instance.with_composer_update
+    instance.rollout_with_composer_update is defined
+    and instance.rollout_with_composer_update
 
 - block:
   - name: Run updatedb - {{ instance.name }}
