@@ -27,7 +27,6 @@
   when: >
     instance.with_composer_update is defined
     and instance.with_composer_update
-    and git_result.changed
 
 - block:
   - name: Run updatedb - {{ instance.name }}
