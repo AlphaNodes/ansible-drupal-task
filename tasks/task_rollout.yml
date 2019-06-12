@@ -14,7 +14,7 @@
 
 - block:
   - name: Run composer update - {{ instance.name }}
-    command: 'composer update'
+    command: 'composer update -n'
     args:
       chdir: "{{ instance.dir }}{{ instance.vhost_dir | default('/htdocs') }}"
     register: composer_result
