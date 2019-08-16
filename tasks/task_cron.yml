@@ -1,5 +1,5 @@
 - name: Run drupal cron (drush) - {{ instance.name }}
-  become: '{{ "no" if drupal_user is undefined else "yes" }}'
+  become: '{{ true if drupal_user is defined else false }}'
   become_user: '{{ drupal_user | default(omit) }}'
   command: '{{ drush_path }} @{{ instance.name }} cron'
   when: >
