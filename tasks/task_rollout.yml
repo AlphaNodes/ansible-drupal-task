@@ -13,20 +13,20 @@
   register: git_result
 
 - block:
-  - name: Run composer update - {{ instance.name }}
-    command: 'composer update -n'
+  - name: Run composer - {{ instance.name }}
+    command: 'composer {{ instance.composer_params | default(drupal_composer_params) }}'
     args:
       chdir: "{{ instance.dir }}{{ instance.vhost_dir | default('/htdocs') }}"
     register: composer_result
     changed_when: composer_result.rc != 0
 
-  - name: Output of composer update - {{ instance.name }}
+  - name: Output of composer - {{ instance.name }}
     debug: var=composer_result.stdout_lines
     when: composer_result.stdout_lines | length
 
   when: >
-    instance.rollout_with_composer_update is defined
-    and instance.rollout_with_composer_update
+    instance.rollout_with_composer is defined
+    and instance.rollout_with_composer
 
 - block:
   - name: Run updatedb - {{ instance.name }}
